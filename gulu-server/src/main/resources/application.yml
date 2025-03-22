@@ -1,0 +1,33 @@
+server:
+  port: 8080
+spring:
+  profiles:
+    active: dev
+  main:
+    allow-circular-references: true
+  datasource:
+    druid:
+      driver-class-name: ${gulu.datasource.driver-class-name}
+      url: jdbc:mysql://${gulu.datasource.host}:${gulu.datasource.port}/${gulu.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      username: ${gulu.datasource.username}
+      password: ${gulu.datasource.password}
+  redis:
+    host: ${spring.redis.host}
+    port: ${spring.redis.port}
+    database: ${spring.redis.database}
+
+#mybatis:
+#  #mapper配置文件
+#  mapper-locations: classpath:mapper/*.xml
+#  type-aliases-package: com.sky.entity
+#  configuration:
+#    #开启驼峰命名
+#    map-underscore-to-camel-case: true
+
+#logging:
+#  level:
+#    com:
+#      gulu:
+#        mapper: debug
+#        service: info
+#        controller: info
