@@ -1,13 +1,16 @@
 gulu:
+#  数据库连接
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     host: localhost
     port: 3306
-    database: gulu_town
+    database: gulu_data
     username: root
     password: root
 spring:
+#  redis连接
   redis:
     port: 6379
     host: localhost
     database: 1
+
