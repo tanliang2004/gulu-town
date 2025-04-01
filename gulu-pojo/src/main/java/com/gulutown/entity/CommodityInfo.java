@@ -42,10 +42,6 @@ public class CommodityInfo {
      */
     private String description;
     /**
-     * 商品标签（好物,推荐）
-     */
-    private String tags;
-    /**
      * 商品图片链接
      */
     private String imageUrl;
@@ -68,5 +64,5 @@ public class CommodityInfo {
     /**
      * 最后更新时间
      */
-    private LocalDateTime update_time;
+    private LocalDateTime updateTime;
 }

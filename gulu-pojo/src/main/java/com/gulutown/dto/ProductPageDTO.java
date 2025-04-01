@@ -12,6 +12,7 @@ public class ProductPageDTO {
     private Integer pageSize;
     private String categoryName;
     private String productName;
+    private Integer status;
 
 
 }

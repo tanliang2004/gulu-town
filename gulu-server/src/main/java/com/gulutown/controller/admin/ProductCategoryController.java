@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 商品分类相关接口
  */
@@ -78,6 +80,17 @@ public class ProductCategoryController {
         log.info("根据ID删除商品分类：{}",id);
         productService.remove(id);
         return Result.success();
+    }
+
+    /**
+     * 查询商品分类
+     * @return 返回数据
+     */
+    @GetMapping("/categoryAll")
+    public Result<List<CommodityCategory>> queryAll() {
+        log.info("查询商品分类");
+        List<CommodityCategory> list = productService.  queryAll();
+        return Result.success(list);
     }
 
 }

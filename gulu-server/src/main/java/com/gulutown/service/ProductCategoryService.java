@@ -5,6 +5,8 @@ import com.gulutown.dto.ProductSortPageDTO;
 import com.gulutown.entity.CommodityCategory;
 import com.gulutown.result.PageResult;
 
+import java.util.List;
+
 public interface ProductCategoryService {
 
     /**
@@ -38,4 +40,10 @@ public interface ProductCategoryService {
      * @param id 删除商品分类的ID
      */
     void remove(Long id);
+
+    /**
+     * 查询商品分类
+     * @return 返回数据
+     */
+    List<CommodityCategory> queryAll();
 }

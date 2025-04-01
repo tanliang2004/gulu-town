@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class ProductCategoryServiceImpl implements ProductCategoryService {
@@ -75,5 +76,13 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
      */
     public void remove(Long id) {
         productMapper.deleteById(id);
+    }
+
+    /**
+     * 查询商品分类
+     * @return 返回数据
+     */
+    public List<CommodityCategory> queryAll() {
+        return productMapper.selectAll();
     }
 }
