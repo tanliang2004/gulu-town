@@ -7,17 +7,17 @@ spring:
     allow-circular-references: true
   datasource:
     druid:
-#      数据库配置
+      #      数据库配置
       driver-class-name: ${gulu.datasource.driver-class-name}
       url: jdbc:mysql://${gulu.datasource.host}:${gulu.datasource.port}/${gulu.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
       username: ${gulu.datasource.username}
       password: ${gulu.datasource.password}
   redis:
-#    redis配置
+    #    redis配置
     host: ${spring.redis.host}
     port: ${spring.redis.port}
     database: ${spring.redis.database}
-#    邮件发送配置
+  #    邮件发送配置
   mail:
     host: smtp.163.com
     port: 465
@@ -48,6 +48,12 @@ auto:
     admin-ttl: 7200000
     # 设置前端传递过来的令牌名称
     admin-token-name: token
+  # 阿里对象存储oss
+  oss:
+    endpoint: ${auto.oss.endpoint}
+    access-key-id: ${auto.oss.access-key-id}
+    access-key-secret: ${auto.oss.access-key-secret}
+    bucket-name: ${auto.oss.bucket-name}
 # 开启mybatis日志
 logging:
   level:

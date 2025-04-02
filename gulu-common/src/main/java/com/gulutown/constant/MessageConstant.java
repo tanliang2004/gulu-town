@@ -12,5 +12,6 @@ public class MessageConstant {
     public static final String PASSWORD_ERROR = "密码错误";
     public static final String CODE_EXPIRED = "验证码过期";
     public static final String CODE_ERROR = "验证码错误";
+    public static final String UPLOAD_FAILED = "文件上传失败";
 
 }
