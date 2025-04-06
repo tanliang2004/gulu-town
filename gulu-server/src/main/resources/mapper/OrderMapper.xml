@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gulutown.mapper.OrderMapper">
+    <!--订单分页查询-->
+    <select id="pageQuery" resultType="com.gulutown.entity.Order">
+        select * from `order`
+        <where>
+            <if test="orderNo != null">
+                order_no = #{orderNo}
+            </if>
+            <if test="customerName != null">
+                and customer_name like concat('%',#{customerName},'%')
+            </if>
+            <if test="status != null">
+                and `status` = #{status}  
+            </if>
+            <if test="startDate != null and endDate != null">
+                and create_time between #{startDate} and #{endDate}
+            </if>
+        </where>
+    </select>
+
+    <!--订单数据统计-->
+    <select id="statistics" resultType="com.gulutown.vo.OrderStatisticsVO">
+        select count(`order`.id) as totalOrders,
+               sum(`status` = 0) as pendingPayment,
+               sum(`status` = 1) as pendingShipment,
+               sum(`status` = 3) as completed,
+               sum(`status` = 4) as cancelled,
+               sum(total_amount) as totalAmount
+        from `order`
+    </select>
+
+    <!--获取地区订单数量分布-->
+    <select id="regionCount" resultType="com.gulutown.vo.OrderRegionCountVO">
+        select address_province as region,count(id) as count
+        from `order`
+        group by address_province
+    </select>
+    <select id="trend" resultType="com.gulutown.vo.OrderTrendVO">
+        WITH RECURSIVE DateSeries AS (
+            SELECT CURDATE() - INTERVAL 6 DAY AS stat_date
+            UNION ALL
+            SELECT stat_date + INTERVAL 1 DAY
+            FROM DateSeries
+            WHERE stat_date &lt; CURDATE()
+        )
+        SELECT
+            DATE_FORMAT(ds.stat_date, '%Y-%m-%d') AS date,
+            COALESCE(o.order_count, 0) AS count
+        FROM DateSeries ds
+                 LEFT JOIN (
+            SELECT
+                DATE(create_time) AS order_date,
+                COUNT(id) AS order_count
+            FROM `order`
+            WHERE
+                create_time &gt;= CURDATE() - INTERVAL 7 DAY
+              AND create_time &lt; CURDATE() + INTERVAL 1 DAY
+            GROUP BY order_date
+        ) o ON ds.stat_date = o.order_date
+        ORDER BY ds.stat_date
+    </select>
+
+    <!--修改订单状态-->
+    <update id="updateStatusById">
+        update `order` set status = #{status} where id = #{id}
+    </update>
+
+    <!--添加状态变更记录-->
+    <insert id="insertStatus">
+        insert into order_status(order_id, order_no, from_status, to_status, operator_id, operator_name, remark, create_time)
+        values (#{orderId},#{orderNo},#{fromStatus},#{toStatus},#{operatorId},#{operatorName},#{remark},#{createTime})
+    </insert>
+
+</mapper>
