@@ -58,7 +58,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         //登录成功生产JWT令牌并封装返回
         Map<String, Object> claims = new HashMap<>();
-        claims.put(JwtClaimsConstant.EMPLOYEE_ID, employee.getId());
+        claims.put(JwtClaimsConstant.EMPLOYEE_ID, emp.getId());
         String token = JwtUtil.createJWT(
                 jwtProperties.getAdminSecretKey(),
                 jwtProperties.getAdminTtl(),

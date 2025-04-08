@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gulutown.mapper.ProductCategoryMapper">
+    <!--商品分类分页查询-->
+    <select id="pageQuery" resultType="com.gulutown.entity.CommodityCategory">
+        select *
+        from commodity_category
+        order by sort_order desc
+    </select>
+
+    <!--插入数据-->
+    <insert id="insert">
+        insert into commodity_category(category_name,sort_order,description,create_time)
+        values (#{categoryName},#{sortOrder},#{description},#{createTime})
+    </insert>
+
+    <!--修改数据-->
+    <update id="update">
+        update commodity_category
+        <set>
+            <if test="categoryName != null">
+                category_name = #{categoryName},
+            </if>
+            <if test="sortOrder != null">
+                sort_order = #{sortOrder},
+            </if>
+            <if test="description != null">
+                description = #{description}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>
