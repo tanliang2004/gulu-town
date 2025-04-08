@@ -64,7 +64,7 @@ public class ProductController {
      * 修改商品
      * @return 响应
      */
-    @PutMapping("/commodity")
+    @PutMapping("/edit")
     public Result<Object> edit(@RequestBody CommodityDTO commodityDTO) {
         log.info("修改商品信息，{}",commodityDTO);
         productService.edit(commodityDTO);
