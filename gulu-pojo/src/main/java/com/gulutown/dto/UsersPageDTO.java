@@ -9,5 +9,5 @@ import lombok.Data;
 public class UsersPageDTO {
     private Integer page;
     private Integer pageSize;
-    private String keyWord;
+    private String keyword;
 }
