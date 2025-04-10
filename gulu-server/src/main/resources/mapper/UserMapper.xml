@@ -5,10 +5,10 @@
     <select id="PageQuery" resultType="com.gulutown.entity.User">
         select * from user
         <where>
-            <if test="keyWord != null">
-                username like concat('%',#{keyWord},'%') or
-                email like concat('%',#{keyWord},'%') or
-                phone like concat('%',#{keyWord},'%')
+            <if test="keyword != null">
+                username like concat('%',#{keyword},'%') or
+                email like concat('%',#{keyword},'%') or
+                phone like concat('%',#{keyword},'%')
             </if>
         </where>
     </select>

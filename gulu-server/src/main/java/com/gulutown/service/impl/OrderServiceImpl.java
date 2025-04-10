@@ -128,7 +128,7 @@ public class OrderServiceImpl implements OrderService {
         OrderStatusVO orderStatus = OrderStatusVO.builder()
                 .orderId(order.getId()).orderNo(order.getOrderNo())
                 .fromStatus(order.getStatus()).toStatus(orderStatusDTO.getStatus())
-                .operatorId(employee.getId()).operatorName(employee.getName())
+                .operatorId(id).operatorName(employee.getName())
                 .remark(orderStatusDTO.getRemark())
                 .createTime(LocalDateTime.now()).build();
         //添加订单状态变更记录
