@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gulutown.mapper.PetReturnMapper">
+
+    <select id="page" resultType="com.gulutown.vo.MissingPetVO">
+        select m.post_id,m.user_id,m.title,m.pet_type,m.lost_time,
+               m.contact,m.status,m.lost_location,m.latitude,m.longitude,m.create_time as postCreateTime,
+               u.username,u.gender,u.email,u.phone,u.avatar,m.likes,m.comments,null as imageUrls
+        from missing_pet_post m
+                 left join user u
+                           on m.user_id = u.id
+        <where>
+            <if test="keyword != null">
+                m.title like concat('%',#{keyword},'%')
+            </if>
+        </where>
+
+    </select>
+    <select id="findImagesByPostIds" resultType="com.gulutown.entity.MissingPetImage">
+        SELECT *
+        FROM missing_pet_image
+        WHERE post_id IN
+        <foreach item="id" collection="postIds" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+</mapper>
