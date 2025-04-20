@@ -2,10 +2,10 @@
 ### Example user template
 
 # IntelliJ project files
-.idea
+/.idea/
 *.iml
 *.class
 *.yml
-target
+/target/
 out
 gen
