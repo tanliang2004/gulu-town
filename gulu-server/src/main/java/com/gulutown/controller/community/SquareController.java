@@ -22,6 +22,7 @@ public class SquareController {
     @Autowired
     private SquareService squareService;
 
+
     /**
      * 社区帖子分页查询
      * @return 返回数据
