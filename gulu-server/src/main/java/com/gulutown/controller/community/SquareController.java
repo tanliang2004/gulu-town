@@ -1,6 +1,5 @@
 package com.gulutown.controller.community;
 
-import com.gulutown.dto.ProductPageDTO;
 import com.gulutown.dto.ProductSortPageDTO;
 import com.gulutown.result.PageResult;
 import com.gulutown.result.Result;
