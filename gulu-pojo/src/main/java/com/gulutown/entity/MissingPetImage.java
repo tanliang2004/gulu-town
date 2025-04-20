@@ -5,7 +5,7 @@ import lombok.Data;
 
 
 /**
- * 失踪宠物图片实体
+ * 失踪宠物图片实体(广场图片共用)
  */
 @Data
 @Builder
