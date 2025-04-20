@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gulutown.mapper.PostCommentMapper">
+
+    <!--根据帖子id查询评论-->
+    <select id="selectByPostId" resultType="com.gulutown.vo.PostCommentVO">
+        SELECT pc.comment_id,pc.target_id,pc.user_id,pc.content,u.avatar as avatar,u.username as username,pc.create_time
+        FROM post_comment pc JOIN `user` u
+        ON pc.user_id = u.id
+        where pc.target_id = #{postId}
+    </select>
+</mapper>

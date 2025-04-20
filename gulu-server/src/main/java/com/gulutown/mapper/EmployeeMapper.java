@@ -26,4 +26,7 @@ public interface EmployeeMapper {
      * @param employee 实体
      */
     void insert(Employee employee);
+
+    @Select("select * from admin where id = #{id}")
+    Employee selectById(Long id);
 }

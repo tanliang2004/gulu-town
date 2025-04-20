@@ -7,10 +7,21 @@ gulu:
     database: gulu_data
     username: root
     password: root
+#    阿里对象存储oss
+  oss:
+    endpoint: oss-cn-hangzhou.aliyuncs.com
+    access-key-id: LTAI5tDDkmhXbQ15xnA8wRBJ
+    access-key-secret: bc0senSBTYqdeO7O3USmYxble1meCY
+    bucket-name: gulu-town-file
 spring:
 #  redis连接
   redis:
     port: 6379
     host: localhost
     database: 1
+code:
+  generate:
+    length: 10       # 总长度
+    timestamp-digits: 4 # 时间戳部分位数
+    char-set: "ABCDEF123456" # 自定义字符集
 

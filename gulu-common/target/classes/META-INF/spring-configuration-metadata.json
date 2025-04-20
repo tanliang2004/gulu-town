@@ -4,6 +4,16 @@
       "name": "auto.jwt",
       "type": "com.gulutown.properties.JwtProperties",
       "sourceType": "com.gulutown.properties.JwtProperties"
+    },
+    {
+      "name": "code.generate",
+      "type": "com.gulutown.properties.CodeProperties",
+      "sourceType": "com.gulutown.properties.CodeProperties"
+    },
+    {
+      "name": "gulu.oss",
+      "type": "com.gulutown.properties.OssProperties",
+      "sourceType": "com.gulutown.properties.OssProperties"
     }
   ],
   "properties": [
@@ -38,6 +48,41 @@
       "name": "auto.jwt.user-ttl",
       "type": "java.lang.Long",
       "sourceType": "com.gulutown.properties.JwtProperties"
+    },
+    {
+      "name": "code.generate.char-set",
+      "type": "java.lang.String",
+      "sourceType": "com.gulutown.properties.CodeProperties"
+    },
+    {
+      "name": "code.generate.length",
+      "type": "java.lang.Integer",
+      "sourceType": "com.gulutown.properties.CodeProperties"
+    },
+    {
+      "name": "code.generate.timestamp-digits",
+      "type": "java.lang.Integer",
+      "sourceType": "com.gulutown.properties.CodeProperties"
+    },
+    {
+      "name": "gulu.oss.access-key-id",
+      "type": "java.lang.String",
+      "sourceType": "com.gulutown.properties.OssProperties"
+    },
+    {
+      "name": "gulu.oss.access-key-secret",
+      "type": "java.lang.String",
+      "sourceType": "com.gulutown.properties.OssProperties"
+    },
+    {
+      "name": "gulu.oss.bucket-name",
+      "type": "java.lang.String",
+      "sourceType": "com.gulutown.properties.OssProperties"
+    },
+    {
+      "name": "gulu.oss.endpoint",
+      "type": "java.lang.String",
+      "sourceType": "com.gulutown.properties.OssProperties"
     }
   ],
   "hints": []

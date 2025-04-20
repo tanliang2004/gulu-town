@@ -6,11 +6,13 @@ import com.gulutown.dto.CommodityCategoryDTO;
 import com.gulutown.dto.ProductSortPageDTO;
 import com.gulutown.entity.CommodityCategory;
 import com.gulutown.mapper.ProductCategoryMapper;
+import com.gulutown.mapper.ProductMapper;
 import com.gulutown.result.PageResult;
 import com.gulutown.service.ProductCategoryService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,7 +21,9 @@ import java.util.List;
 public class ProductCategoryServiceImpl implements ProductCategoryService {
 
     @Autowired
-    private ProductCategoryMapper productMapper;
+    private ProductCategoryMapper productCategoryMapper;
+    @Autowired
+    private ProductMapper productMapper;
 
     /**
      * 商品分类分页查询
@@ -29,7 +33,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
      */
     public PageResult page(ProductSortPageDTO productSortPageDTO) {
         PageHelper.startPage(productSortPageDTO.getPage(), productSortPageDTO.getPageSize());
-        Page<CommodityCategory> page = productMapper.pageQuery();
+        Page<CommodityCategory> page = productCategoryMapper.pageQuery();
         return PageResult.builder()
                 .total(page.getTotal())
                 .records(page.getResult())
@@ -48,7 +52,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         if (commodityCategory.getSortOrder() == null) {
             commodityCategory.setSortOrder(1);
         }
-        productMapper.insert(commodityCategory);
+        productCategoryMapper.insert(commodityCategory);
     }
 
     /**
@@ -57,7 +61,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
      * @return 响应数据
      */
     public CommodityCategory queryById(Long id) {
-        return productMapper.queryById(id);
+        return productCategoryMapper.queryById(id);
     }
 
     /**
@@ -67,15 +71,18 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     public void edit(CommodityCategoryDTO commodityCategoryDTO) {
         CommodityCategory commodityCategory = new CommodityCategory();
         BeanUtils.copyProperties(commodityCategoryDTO,commodityCategory);
-        productMapper.update(commodityCategory);
+        productCategoryMapper.update(commodityCategory);
     }
 
     /**
      * 根据ID删除商品分类
      * @param id 删除商品分类的ID
      */
+    @Transactional
     public void remove(Long id) {
-        productMapper.deleteById(id);
+        //根据商品分类id删除对应的商品
+        productMapper.deleteByCateGoryId(id);
+        productCategoryMapper.deleteById(id);
     }
 
     /**
@@ -83,6 +90,6 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
      * @return 返回数据
      */
     public List<CommodityCategory> queryAll() {
-        return productMapper.selectAll();
+        return productCategoryMapper.selectAll();
     }
 }

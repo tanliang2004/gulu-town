@@ -2,6 +2,7 @@ package com.gulutown.controller.admin;
 
 import com.gulutown.constant.EmailCodeMessage;
 import com.gulutown.constant.MessageConstant;
+import com.gulutown.context.BaseContext;
 import com.gulutown.dto.EmployeeLoginDTO;
 import com.gulutown.exception.EmailNotRegisteredException;
 import com.gulutown.result.Result;
@@ -41,6 +42,8 @@ public class EmployeeController {
     public Result<EmployeeLoginVO> login(@RequestBody EmployeeLoginDTO employeeLoginDTO) {
         log.info("管理员登录请求：{}", employeeLoginDTO);
         EmployeeLoginVO employeeLoginVO = employeeService.login(employeeLoginDTO);
+        //将管理员id存入ThreadLocal中
+        BaseContext.setCurrentId(employeeLoginVO.getId());
         return Result.success(employeeLoginVO);
     }
 
