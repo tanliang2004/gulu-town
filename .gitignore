@@ -6,5 +6,6 @@
 *.iml
 *.class
 *.yml
+target
 out
 gen
