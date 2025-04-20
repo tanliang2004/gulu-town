@@ -31,8 +31,7 @@
     {
       "name": "auto.jwt.admin-ttl",
       "type": "java.lang.Long",
-      "sourceType": "com.gulutown.properties.JwtProperties",
-      "defaultValue": 0
+      "sourceType": "com.gulutown.properties.JwtProperties"
     },
     {
       "name": "auto.jwt.user-secret-key",
@@ -48,8 +47,7 @@
     {
       "name": "auto.jwt.user-ttl",
       "type": "java.lang.Long",
-      "sourceType": "com.gulutown.properties.JwtProperties",
-      "defaultValue": 0
+      "sourceType": "com.gulutown.properties.JwtProperties"
     },
     {
       "name": "code.generate.char-set",
