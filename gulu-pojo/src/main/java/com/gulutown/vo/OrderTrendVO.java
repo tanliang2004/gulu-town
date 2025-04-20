@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.time.LocalDate;
 
+/**
+ * 订单趋势统计
+ */
 @Data
 @Builder
 public class OrderTrendVO {
