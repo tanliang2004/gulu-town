@@ -7,6 +7,7 @@ import com.gulutown.entity.User;
 import com.gulutown.mapper.UserMapper;
 import com.gulutown.result.PageResult;
 import com.gulutown.service.UserService;
+import com.gulutown.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,7 @@ public class UserServiceImpl implements UserService {
      */
     public PageResult page(UsersPageDTO usersPageDTO) {
         PageHelper.startPage(usersPageDTO.getPage(), usersPageDTO.getPageSize());
-        Page<User> page = userMapper.PageQuery(usersPageDTO);
+        Page<UserVO> page = userMapper.PageQuery(usersPageDTO);
         return new PageResult(page.getTotal(),page.getResult());
     }
 
@@ -32,7 +33,7 @@ public class UserServiceImpl implements UserService {
      * @param id 用户id
      * @return 返回数据
      */
-    public User queryById(Long id) {
+    public UserVO queryById(Long id) {
         return userMapper.selectById(id);
     }
 }

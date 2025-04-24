@@ -3,6 +3,7 @@ package com.gulutown.service;
 import com.gulutown.dto.UsersPageDTO;
 import com.gulutown.entity.User;
 import com.gulutown.result.PageResult;
+import com.gulutown.vo.UserVO;
 
 public interface UserService {
     /**
@@ -17,5 +18,5 @@ public interface UserService {
      * @param id 用户id
      * @return 返回数据
      */
-    User queryById(Long id);
+    UserVO queryById(Long id);
 }

@@ -4,8 +4,11 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.gulutown.dto.ProductSortPageDTO;
 import com.gulutown.entity.MissingPetImage;
+import com.gulutown.mapper.PetReturnMapper;
+import com.gulutown.mapper.PostCommentMapper;
 import com.gulutown.mapper.SquareMapper;
 import com.gulutown.result.PageResult;
+import com.gulutown.service.PetReturnService;
 import com.gulutown.service.SquareService;
 import com.gulutown.vo.SquarePostVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,8 @@ public class SquareServiceImpl implements SquareService {
 
     @Autowired
     private SquareMapper squareMapper;
+    @Autowired
+    private PetReturnMapper petReturnMapper;
 
     /**
      * 社区帖子分页查询
@@ -63,5 +68,20 @@ public class SquareServiceImpl implements SquareService {
         return PageResult.builder()
                 .total(page.getTotal())
                 .records(result).build();
+    }
+
+    /**
+     * 根据帖子id删除帖子
+     * @param postId 帖子id
+     */
+    @Transactional
+    public void remove(Long postId) {
+        //删除主帖子
+        squareMapper.remove(postId);
+        //删除相关点赞和评论信息
+        petReturnMapper.deleteCommentById(postId);
+        petReturnMapper.deleteLikeById(postId);
+        //删除图片信息
+        squareMapper.deleteImageById(postId);
     }
 }

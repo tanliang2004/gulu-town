@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gulutown.mapper.DashboardMapper">
+    <select id="userGrowthWeek" resultType="integer">
+        WITH RECURSIVE date_range AS (
+#         确定本周起始日期（周日为一周开始，若要周一为开始，可调整逻辑）
+        SELECT CURDATE() - INTERVAL WEEKDAY(CURDATE()) DAY AS week_start
+        UNION ALL
+        SELECT week_start + INTERVAL 1 DAY
+        FROM date_range
+        WHERE week_start &lt; CURDATE() - INTERVAL WEEKDAY(CURDATE()) DAY + INTERVAL 6 DAY
+        )
+        SELECT
+#         DATE_FORMAT(dr.week_start, '%w') AS day_of_week, -- 以数字形式获取星期几（0 - 6，0代表周日 ）
+        IFNULL(COUNT(u.id), 0) AS user_count -- 统计当天创建用户数，无则为0
+        FROM date_range dr
+#         左连接user表，根据创建时间匹配
+        LEFT JOIN `user` u ON DATE(u.create_time) = dr.week_start
+        GROUP BY dr.week_start
+        ORDER BY dr.week_start;
+    </select>
+
+
+    <select id="userGrowthMonthString" resultType="string">
+        WITH RECURSIVE date_range AS (
+        SELECT
+        DATE_FORMAT(CURDATE(), '%Y-%m-01') AS day_date  -- 本月第一天
+        UNION ALL
+        SELECT
+        day_date + INTERVAL 1 DAY
+        FROM date_range
+        WHERE
+        day_date &lt; LAST_DAY(CURDATE())  -- 递归至本月最后一天
+        )
+        SELECT
+        DATE_FORMAT(dr.day_date, '%e日') AS day_label  -- 格式化为"n日"
+#         COALESCE(COUNT(u.id), 0) AS user_count
+        FROM date_range dr
+        LEFT JOIN `user` u
+        ON DATE(u.create_time) = dr.day_date
+        GROUP BY dr.day_date
+        ORDER BY dr.day_date;
+    </select>
+    <select id="userGrowthMonthValue" resultType="integer">
+        WITH RECURSIVE date_range AS (
+        SELECT
+        DATE_FORMAT(CURDATE(), '%Y-%m-01') AS day_date  -- 本月第一天
+        UNION ALL
+        SELECT
+        day_date + INTERVAL 1 DAY
+        FROM date_range
+        WHERE
+        day_date &lt; LAST_DAY(CURDATE())  -- 递归至本月最后一天
+        )
+        SELECT
+#         DATE_FORMAT(dr.day_date, '%e日') AS day_label,  -- 格式化为"n日"
+        COALESCE(COUNT(u.id), 0) AS user_count
+        FROM date_range dr
+        LEFT JOIN `user` u
+        ON DATE(u.create_time) = dr.day_date
+        GROUP BY dr.day_date
+        ORDER BY dr.day_date;
+    </select>
+
+    <select id="userGrowthYear" resultType="integer">
+        WITH RECURSIVE month_sequence AS (
+        SELECT 1 AS month_num
+        UNION ALL
+        SELECT month_num + 1
+        FROM month_sequence
+        WHERE month_num &lt; 12
+        )
+        SELECT
+#         ms.month_num AS month,
+#         CONCAT(ms.month_num, '月') AS month_label,
+        COALESCE(COUNT(u.id), 0) AS user_count
+        FROM month_sequence ms
+        LEFT JOIN `user` u
+        ON MONTH(u.create_time) = ms.month_num
+        AND YEAR(u.create_time) = YEAR(CURDATE())
+        GROUP BY ms.month_num
+        ORDER BY ms.month_num;
+    </select>
+    <select id="recentOrders" resultType="com.gulutown.vo.RecentOrdersVO">
+        WITH RECURSIVE date_range AS (
+        SELECT CURDATE() - INTERVAL #{days} DAY AS stat_date  -- ?参数为days-1（包含今天）
+        UNION ALL
+        SELECT stat_date + INTERVAL 1 DAY
+        FROM date_range
+        WHERE stat_date &lt; CURDATE()
+        )
+        SELECT
+        DATE_FORMAT(dr.stat_date, '%m月%d日') AS label,
+        COUNT(CASE WHEN o.status IN (0,1,2,3,4) THEN 1 END) AS orders,
+        COUNT(CASE WHEN o.status = 0 THEN 1 END) AS cancelled,
+        COUNT(CASE WHEN o.status = 2 THEN 1 END) AS pending,
+        COUNT(CASE WHEN o.status = 4 THEN 1 END) AS shipped
+        FROM date_range dr
+        LEFT JOIN `order` o
+        ON DATE(o.create_time) = dr.stat_date
+        AND o.create_time >= CURDATE() - INTERVAL #{days} DAY  -- 优化查询性能
+        GROUP BY dr.stat_date
+        ORDER BY dr.stat_date;
+    </select>
+</mapper>

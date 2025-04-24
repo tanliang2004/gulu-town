@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gulutown.mapper.PetMapper">
+
+    <select id="selectPage" resultType="com.gulutown.vo.PetInfoVO">
+        select pi.pet_name,pi.category_id,pi.image,pi.pet_gender,pi.status,
+               pi.weight,pi.sterilization_status,
+               pi.personality,pi.label,
+               pc.type,pc.pet_type,
+               u.username,u.avatar,u.gender,
+               pi.date_birth,pi.create_time
+        from pet_info pi join user u
+        on pi.user_id = u.id join pet_category pc
+        on pi.category_id = pc.category_id
+    </select>
+</mapper>
