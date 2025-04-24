@@ -5,6 +5,7 @@ import com.gulutown.entity.User;
 import com.gulutown.result.PageResult;
 import com.gulutown.result.Result;
 import com.gulutown.service.UserService;
+import com.gulutown.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,9 +42,9 @@ public class UserController {
      * @return 返回数据
      */
     @GetMapping("/{id}")
-    public Result<User> queryById(@PathVariable Long id) {
+    public Result<UserVO> queryById(@PathVariable Long id) {
         log.info("根据id查询用户信息,{}",id);
-        User user = userService.queryById(id);
+        UserVO user = userService.queryById(id);
         return Result.success(user);
     }
 

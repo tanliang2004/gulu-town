@@ -3,6 +3,7 @@ package com.gulutown.mapper;
 import com.github.pagehelper.Page;
 import com.gulutown.dto.UsersPageDTO;
 import com.gulutown.entity.User;
+import com.gulutown.vo.UserVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -13,8 +14,8 @@ public interface UserMapper {
      * @param usersPageDTO 分页数据
      * @return 返回数据
      */
-    Page<User> PageQuery(UsersPageDTO usersPageDTO);
+    Page<UserVO> PageQuery(UsersPageDTO usersPageDTO);
 
     @Select("select * from user where id = #{id}")
-    User selectById(Long id);
+    UserVO selectById(Long id);
 }

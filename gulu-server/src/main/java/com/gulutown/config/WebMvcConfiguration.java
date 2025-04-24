@@ -57,15 +57,15 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
     }
 
 //    @Configuration
-    public class CorsConfig implements WebMvcConfigurer {
-        @Override
-        public void addCorsMappings(CorsRegistry registry) {
-            registry.addMapping("/**")
-                    .allowedOrigins("*") // Vue 开发服务器的默认地址
-                    .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                    .allowedHeaders("*")
-                    .allowCredentials(true)
-                    .maxAge(3600);
-        }
-    }
+//    public class CorsConfig implements WebMvcConfigurer {
+//        @Override
+//        public void addCorsMappings(CorsRegistry registry) {
+//            registry.addMapping("/**")
+//                    .allowedOrigins("*") // Vue 开发服务器的默认地址
+//                    .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+//                    .allowedHeaders("*")
+//                    .allowCredentials(true)
+//                    .maxAge(3600);
+//        }
+//    }
 }
